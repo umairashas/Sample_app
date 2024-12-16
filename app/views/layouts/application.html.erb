@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Sample App" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= yield :head %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="container my-4">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Todo List</a>
+          <div class="ml-auto"> <!-- Ensures the buttons are aligned to the right -->
+            <% if user_signed_in? %>
+              <!-- If the user is signed in, show the Sign Out button -->
+              <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+            <% else %>
+              <!-- If the user is not signed in, show the Sign Up and Log In buttons -->
+              <%= link_to "Sign Up", new_registration_path(resource_name), class: "btn btn-outline-primary mr-2" %>
+              <%= link_to "Log In", new_session_path(resource_name), class: "btn btn-outline-success" %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- User Greeting if Signed In -->
+    <div class="d-flex justify-content-center align-items-center mt-5">
+      <% if user_signed_in? %>
+        <%= link_to "Hi, #{current_user.email}", edit_user_registration_path, class: 'text-dark' %>
+      <% end %>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>

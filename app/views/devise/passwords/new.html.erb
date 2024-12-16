@@ -1,0 +1,25 @@
+<h2 class="text-center">Forgot your password?</h2>
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 30vh;">
+  <div class="col-md-4">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <!-- Render any error messages if the form is invalid, styled with Bootstrap -->
+      <%= render "devise/shared/error_messages", resource: resource, class: "alert alert-danger" %>
+
+      <div class="form-group">
+        <!-- Label for the email field -->
+        <%= f.label :email, class: "control-label" %>
+        <!-- Email input field, styled with Bootstrap's form-control class -->
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <!-- Submit button, styled with Bootstrap's btn and btn-primary classes -->
+        <%= f.submit "Send me reset password instructions", class: "btn btn-primary w-100" %>
+      </div>
+    <% end %>
+
+    <!-- Render Devise's shared links (e.g., login, sign up links), styled with Bootstrap classes -->
+    <%# <%= render "devise/shared/links", class: "mt-3 text-center" %> 
+  </div>
+</div>

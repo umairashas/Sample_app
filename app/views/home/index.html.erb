@@ -1,0 +1,113 @@
+<div class="container my-4">
+  <!-- Flash messages -->
+  <% if flash[:alert] %>
+    <div class="alert alert-danger mt-3">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+  <% if flash[:notice] %>
+    <div class="alert alert-success mt-3">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <!-- Navbar with Sign-Out Button -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Todo List</a>
+      <div class="d-flex">
+        <% if user_signed_in? %>
+          <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-5 pt-5">
+    <!-- Check if there are no todos and display message -->
+    <% if @todos.empty? %>
+      <div class="alert alert-info mt-3">
+        No todos yet! Start adding some.
+      </div>
+    <% else %>
+      <!-- Todo List Table -->
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th scope="col">SR.no</th>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @todos.each_with_index do |todo, index| %>
+            <tr>
+              <!-- Checkbox Column -->
+              <td><%= todo.id %></td>
+
+              <!-- Task Title Column -->
+              <td><%= todo.title %></td>
+
+              <!-- Status Column -->
+              <td>
+                <%= form_with model: todo, url: todo_path(todo), method: :patch, local: true do |f| %>
+                  <div class="form-check d-flex align-items-center mr-4">
+                    <%= check_box_tag "todo[completed]", "1", todo.completed?, onchange: "this.form.submit()", class: 'form-check-input mr-2' %>
+                    <%= f.hidden_field :status, value: todo.completed? ? 'completed' : 'pending' %>
+                    <span class="badge <%= todo.completed? ? 'bg-success' : 'bg-warning' %> ml-3">
+                      <%= todo.status.humanize %>
+                    </span>
+                  </div>
+                <% end %>
+              </td>
+
+              <!-- Action Column -->
+              <td>
+                <%= link_to 'Delete', todo_path(todo), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-danger btn-sm' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <!-- Button to toggle form visibility -->
+    <button id="showFormBtn" class="btn btn-success mb-3">
+      <i class="fas fa-plus"></i> Add 
+    </button>
+
+    <!-- Form for Adding Todo (Initially hidden) -->
+    <div id="todoForm" style="display:none;">
+      <%= form_with model: Todo.new, url: todos_path, local: true, class: 'mb-4' do |form| %>
+        <div class="mb-3">
+          <%= form.label :title, class: 'form-label' %>
+          <%= form.text_field :title, class: 'form-control' %>
+        </div>
+        <div>
+          <%= form.submit 'Add Todo', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Font Awesome (for the + icon) -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<!-- JavaScript to toggle form visibility -->
+<script>
+  document.getElementById('showFormBtn').addEventListener('click', function() {
+    var form = document.getElementById('todoForm');
+    if (form.style.display === "none") {
+      form.style.display = "block";
+      this.innerHTML = '<i class="fas fa-minus"></i> Close Form';
+    } else {
+      form.style.display = "none";
+      this.innerHTML = '<i class="fas fa-plus"></i> Add Todo';
+    }
+  });
+</script>
