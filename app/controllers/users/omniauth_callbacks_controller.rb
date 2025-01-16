@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   respond_to :json
-  def handle_omniauth(provider)
+  def google_oauth2(provider)
     @user = User.from_omniauth(request.env["omniauth.auth"])
     
     if @user.persisted?

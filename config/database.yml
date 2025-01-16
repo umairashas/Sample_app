@@ -4,7 +4,7 @@ default: &default
   timeout: 5000
   username: ror
   password: 1234
-  host: db  # This should point to the db service in Docker Compose
+  host: localhost  # This should point to the db service in Docker Compose
 
 development:
   <<: *default
