@@ -307,8 +307,10 @@ Devise.setup do |config|
   config.omniauth :google_oauth2,
   ENV['GOOGLE_CLIENT_ID'],
   ENV['GOOGLE_CLIENT_SECRET'],
-  scope: 'email profile',
-  redirect_uri: 'http://localhost:3000/auth/google_oauth2/callback'
+  {scope: 'email,profile',
+    provider_ignores_state: true
+  }
+
   config.omniauth :facebook, 
   ENV['FACEBOOK_APP_ID'], 
   ENV['FACEBOOK_APP_SECRET'], 
