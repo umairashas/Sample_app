@@ -4,6 +4,7 @@ class TodosController < ApplicationController
   load_and_authorize_resource
 
   def create
+    UserMailer.first_todo(current_user).deliver_now
     @todo = current_user.todos.build(todo_params)
     if @todo.save
       redirect_to root_path, notice: 'Todo was successfully created.'
@@ -12,7 +13,8 @@ class TodosController < ApplicationController
     end
   end
 
-    def update
+    def update      
+
     @todo = current_user.todos.find(params[:id])
     
     # Update the status based on the checkbox

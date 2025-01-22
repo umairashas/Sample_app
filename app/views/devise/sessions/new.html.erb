@@ -36,6 +36,7 @@
       </div>
           <%= button_to 'Login with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
           <%= button_to 'Login with Facebook', user_facebook_omniauth_authorize_path, method: :post, data: { turbo: 'false' } %>
+          <%= button_to 'Login with GitHub', '/auth/github' %>
 
 
 
