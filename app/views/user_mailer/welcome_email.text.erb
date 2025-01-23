@@ -1,3 +1,5 @@
 Welcome, <%= @user.email %>!
 
 Thank you for signing up. 
+<%= image_tag attachments['download.png'].url, alt: 'My Photo' %>
+<%= image_tag attachments.inline['image.jpg'].url, alt: 'My Photo' %>
