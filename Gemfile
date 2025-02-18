@@ -64,3 +64,7 @@ gem 'omniauth-facebook'
 gem 'pg'
 gem 'omniauth-github'
 gem 'faker'
+gem 'omniauth-linkedin-oauth2'
+gem "tailwindcss-ruby", "~> 4.0"
+
+gem "tailwindcss-rails", "~> 4.0"

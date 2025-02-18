@@ -18,31 +18,11 @@
   </head>
 
   <body>
-    <div class="container my-4">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Todo List</a>
-          <div class="ml-auto"> <!-- Ensures the buttons are aligned to the right -->
-            <% if user_signed_in? %>
-              <!-- If the user is signed in, show the Sign Out button -->
-              <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
-            <% else %>
-              <!-- If the user is not signed in, show the Sign Up and Log In buttons -->
-              <%= link_to "Sign Up", new_registration_path(resource_name), class: "btn btn-outline-primary mr-2" %>
-              <%= link_to "Log In", new_session_path(resource_name), class: "btn btn-outline-success" %>
-            <% end %>
-          </div>
-        </div>
-      </nav>
-    </div>
+    <main class="container mx-auto mt-28 px-5 flex">
+    
 
-    <!-- User Greeting if Signed In -->
-    <div class="d-flex justify-content-center align-items-center mt-5">
-      <% if user_signed_in? %>
-        <%= link_to "Hi, #{current_user.email}", edit_user_registration_path, class: 'text-dark' %>
-      <% end %>
-    </div>
 
     <%= yield %>
+    </main>
   </body>
 </html>

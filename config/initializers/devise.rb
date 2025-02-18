@@ -304,24 +304,10 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
-  config.omniauth :google_oauth2,
-  ENV['GOOGLE_CLIENT_ID'],
-  ENV['GOOGLE_CLIENT_SECRET'],
-  {scope: 'email,profile',
-    provider_ignores_state: true
-  }
 
-  config.omniauth :facebook, 
-  ENV['FACEBOOK_APP_ID'], 
-  ENV['FACEBOOK_APP_SECRET'], 
-  scope: 'email', 
-  info_fields: 'email,name'
-  
-  config.omniauth :github,
-   ENV['GITHUB_CLIENT_ID'],
-   ENV['GITHUB_CLIENT_SECRET']
-
-
+config.omniauth :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'], scope: 'user:email'
+config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], scope: 'userinfo.email,userinfo.profile'
+config.omniauth :linkedin, ENV['LINKEDIN_CLIENT_ID'], ENV['LINKEDIN_CLIENT_SECRET'], scope: 'r_liteprofile r_emailaddress'
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
